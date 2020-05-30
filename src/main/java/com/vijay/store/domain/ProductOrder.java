@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +19,7 @@ import com.vijay.store.domain.enumeration.OrderStatus;
  */
 @Entity
 @Table(name = "product_order")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class ProductOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,18 +42,18 @@ public class ProductOrder implements Serializable {
     private String code;
 
     @OneToMany(mappedBy = "order")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<OrderItem> orderItems = new HashSet<>();
 
     @OneToMany(mappedBy = "order")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Invoice> invoices = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties("orders")
+    @JsonIgnoreProperties(value = "orders", allowSetters = true)
     private Customer customer;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -164,7 +163,7 @@ public class ProductOrder implements Serializable {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -182,6 +181,7 @@ public class ProductOrder implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "ProductOrder{" +

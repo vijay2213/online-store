@@ -14,7 +14,7 @@ import { ProductOrderService } from 'app/entities/product-order/product-order.se
 
 @Component({
   selector: 'jhi-invoice-update',
-  templateUrl: './invoice-update.component.html'
+  templateUrl: './invoice-update.component.html',
 })
 export class InvoiceUpdateComponent implements OnInit {
   isSaving = false;
@@ -28,7 +28,7 @@ export class InvoiceUpdateComponent implements OnInit {
     paymentMethod: [null, [Validators.required]],
     paymentDate: [null, [Validators.required]],
     paymentAmount: [null, [Validators.required]],
-    order: []
+    order: [],
   });
 
   constructor(
@@ -61,7 +61,7 @@ export class InvoiceUpdateComponent implements OnInit {
       paymentMethod: invoice.paymentMethod,
       paymentDate: invoice.paymentDate ? invoice.paymentDate.format(DATE_TIME_FORMAT) : null,
       paymentAmount: invoice.paymentAmount,
-      order: invoice.order
+      order: invoice.order,
     });
   }
 
@@ -91,7 +91,7 @@ export class InvoiceUpdateComponent implements OnInit {
         ? moment(this.editForm.get(['paymentDate'])!.value, DATE_TIME_FORMAT)
         : undefined,
       paymentAmount: this.editForm.get(['paymentAmount'])!.value,
-      order: this.editForm.get(['order'])!.value
+      order: this.editForm.get(['order'])!.value,
     };
   }
 
