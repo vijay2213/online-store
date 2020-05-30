@@ -8,7 +8,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.HashSet;
@@ -23,7 +22,7 @@ import com.vijay.store.domain.enumeration.PaymentMethod;
  */
 @Entity
 @Table(name = "invoice")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Invoice implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,14 +57,14 @@ public class Invoice implements Serializable {
     private BigDecimal paymentAmount;
 
     @OneToMany(mappedBy = "invoice")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<Shipment> shipments = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties("invoices")
+    @JsonIgnoreProperties(value = "invoices", allowSetters = true)
     private ProductOrder order;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
     }
@@ -189,7 +188,7 @@ public class Invoice implements Serializable {
     public void setOrder(ProductOrder productOrder) {
         this.order = productOrder;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
     public boolean equals(Object o) {
@@ -207,6 +206,7 @@ public class Invoice implements Serializable {
         return 31;
     }
 
+    // prettier-ignore
     @Override
     public String toString() {
         return "Invoice{" +

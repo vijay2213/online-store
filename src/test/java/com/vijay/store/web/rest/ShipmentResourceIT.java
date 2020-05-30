@@ -28,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link ShipmentResource} REST controller.
  */
 @SpringBootTest(classes = StoreApp.class)
-
 @AutoConfigureMockMvc
 @WithMockUser
 public class ShipmentResourceIT {
@@ -92,7 +91,6 @@ public class ShipmentResourceIT {
     @Transactional
     public void createShipment() throws Exception {
         int databaseSizeBeforeCreate = shipmentRepository.findAll().size();
-
         // Create the Shipment
         restShipmentMockMvc.perform(post("/api/shipments")
             .contentType(MediaType.APPLICATION_JSON)
@@ -137,6 +135,7 @@ public class ShipmentResourceIT {
 
         // Create the Shipment, which fails.
 
+
         restShipmentMockMvc.perform(post("/api/shipments")
             .contentType(MediaType.APPLICATION_JSON)
             .content(TestUtil.convertObjectToJsonBytes(shipment)))
@@ -177,7 +176,6 @@ public class ShipmentResourceIT {
             .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
             .andExpect(jsonPath("$.details").value(DEFAULT_DETAILS));
     }
-
     @Test
     @Transactional
     public void getNonExistingShipment() throws Exception {
@@ -221,8 +219,6 @@ public class ShipmentResourceIT {
     @Transactional
     public void updateNonExistingShipment() throws Exception {
         int databaseSizeBeforeUpdate = shipmentRepository.findAll().size();
-
-        // Create the Shipment
 
         // If the entity doesn't have an ID, it will throw BadRequestAlertException
         restShipmentMockMvc.perform(put("/api/shipments")
